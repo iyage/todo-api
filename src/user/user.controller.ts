@@ -24,9 +24,11 @@ export class UserController {
   async create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
     try {
       const user: User = await this.userService.create(createUserDto);
+      user.password = '***************';
       return new ResponseEntity('User register succesfully', 201, user);
     } catch (error) {
-      this.logger.error(error.message, error?.stackTrace);
+      console.log(error);
+      // this.logger.error(error.message, error?.stackTrace);
       return new ResponseEntity(error?.message, error?.status || 500, null);
     }
   }
